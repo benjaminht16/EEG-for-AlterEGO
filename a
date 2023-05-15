@@ -1,94 +1,88 @@
-Human:AlterEcho/ 
-├── data/
-│   ├── audio/
-│   ├── images/
-│   ├── videos/
-│   ├── fmri/ 
-│   │   ├── raw_data.nii.gz 
-│   │   ├── events.tsv 
-│   │   ├── mask.nii.gz 
-│   │   └── confounds.tsv 
-│   └── images/ 
-│       ├── image_database/ 
-│       └── generated_images/ 
-├── derivatives/
-│   ├── audio/
-│   ├── images/
-│   ├── videos/
-│   ├── features/
-│   └── fmri/ 
-│       ├── preprocessed_data.nii.gz 
-│       ├── confounds.tsv 
-│       ├── bold_space-MNI152NLin2009cAsym_preproc.nii.gz 
-│       ├── bold_space-MNI152NLin2009cAsym_preproc_brainmask.nii.gz 
-│       ├── bold_space-MNI152NLin2009cAsym_preproc_brainmask_dil.nii.gz 
-│       ├── bold_space-MNI152NLin2009cAsym_variant-smoothAROMAnonaggr_preproc.nii.gz 
-│       ├── bold_space-MNI152NLin2009cAsym_variant-smoothAROMAnonaggr_preproc_brainmask.nii.gz 
-│       └── bold_space-MNI152NLin2009cAsym_variant-smoothAROMAnonaggr_preproc_confounds.tsv 
-├── models/
-│   ├── audio/
-│   ├── image/
-│   ├── video/
-│   ├── fusion/
-│   └── fmri/ 
-│       ├── training.py 
-│       ├── prediction.py 
-│       └── evaluation.py 
-├── scripts/ 
-│   ├── feature_extraction/
-│   ├── model_training/
-│   ├── model_evaluation/
-│   ├── inference/
-│   ├── visualization/
-│   ├── tools/
-│   ├── preprocessing.py 
-│   ├── image_reconstruction.py 
-│   ├── registration.py 
-│   ├── fmri.py 
-│   ├── train_fmri.py 
-│   ├── predict_fmri.py 
-│   └── evaluate_fmri.py 
-│   documentation/
-│   ├── index.rst
-│   ├── audio/
-│   ├── image/
-│   ├── video/
-│   └── fusion/
-├── environment.yml 
-├── AlterEcho/ 
-│   ├── acoustic_sensing.py 
-│   ├── deep_learning_model.py 
-│   ├── preprocessing.py 
-│   ├── lip_reading.py 
-│   ├── train_model.py 
-│   ├── predict_command.py 
-│   └── evaluation.py 
-└── smart_glasses/ 
-    ├── eye_tracking.py 
-    ├── facial_movement.py 
-    ├── upper_body_movement.py 
-    └── data_analysis.py
-<Write the [Reflecting the exact technology set out by the article down below and the AlterEgo silent speech model from 2019, please make sure this module/file matches the needs and capabilities of this AlterEcho integrated SilentSpeech/AI_Assisted_cognition system with taking into account all relevant modules in the directory above for functions and components.>
-It is not telepathy: It is the common, off-the-shelf eyeglasses he is wearing, known as EchoSpeech—a silent-speech recognition interface that makes use of acoustic-sensing and artificial intelligence to identify up to 31 unvocalized commands, depending on lip and mouth movements.   
-   
-According to scientists, having been developed by Cornell’s Smart Computer Interfaces for Future Interactions (SciFi) Lab, the low-power and wearable interface needs just a few minutes of user training data before it will identify commands and could be run on a smartphone.   
-   
-Zhang is the lead author of “EchoSpeech: Continuous Silent Speech Recognition on Minimally-obtrusive Eyewear Powered by Acoustic Sensing,” which will be presented at the Association for Computing Machinery Conference on Human Factors in Computing Systems (CHI) April 2023 in Hamburg, Germany. In its current form, EchoSpeech could be utilized to communicate with others through smartphones in places where speech is unsuitable or inconvenient, like a quiet library or a noisy restaurant. Also, the silent speech interface could be paired with a stylus and made use of design software like CAD, all but removing the requirement for a mouse and a keyboard.   
-   
-Fitted with a pair of speakers and microphones smaller than pencil erasers, the EchoSpeech glasses turn out to be a wearable AI-powered sonar system, sending and receiving soundwaves throughout the face and sensing mouth movements. Also, a deep learning algorithm developed by SciFi Lab scientists then examines such echo profiles in real-time, having around 95% accuracy. Also, Zhang is the director of the SciFi Lab.   
-   
-The SciFi Lab has come up with numerous wearable devices that track hand, body, and facial movements with the help of machine learning and wearable miniature video cameras. Now, the laboratory has shifted away from cameras and moved toward acoustic sensing to track body and face movements.   
-   
-EchoSpeech relies on the laboratory’s similar acoustic-sensing device known as EarIO, a wearable earbud that helps track facial movements.   
-   
-Cheng Zhang stated that the majority of the technology in silent-speech recognition had been restricted to a select set of predetermined commands and needed the user to face or wear a camera, which is neither practical nor possible. Also, there are significant privacy concerns, including wearable cameras—for both the user and also with those whom the user interacts with.   
-   
-Newly developed acoustic-sensing technology like EchoSpeech helps eliminate the need for wearable video cameras. Also, because audio data is much smaller compared to the image or video data, it needs less bandwidth to process and could be relayed to a smartphone through Bluetooth in real time, stated François Guimbretière, professor in information science at Cornell Bowers CIS and a co-author. Cheng Zhang stated that battery life improves exponentially, with ten hours with acoustic sensing versus 30 minutes with a camera.   
-   
-Furthermore, the team is examining commercializing the technology behind EchoSpeech, thanks in part to Ignite, Cornell's Research Laboratory to Market gap funding.   
-   
-In upcoming work, scientists from SciFi Lab are exploring smart-glass applications to track eye, facial, and upper body movements.   
-   
-Cheng Zhang stated, “We think glass will be an important personal computing platform to understand human activities in everyday settings.”   
-   
+Human:AlterEcho/   
+├── data/  
+│   ├── audio/  
+│   ├── images/  
+│   ├── videos/  
+│   ├── fmri/   
+│   │   ├── raw_data.nii.gz   
+│   │   ├── events.tsv   
+│   │   ├── mask.nii.gz   
+│   │   └── confounds.tsv   
+│   └── images/   
+│       ├── image_database/   
+│       └── generated_images/   
+├── derivatives/  
+│   ├── audio/  
+│   ├── images/  
+│   ├── videos/  
+│   ├── features/  
+│   └── fmri/   
+│       ├── preprocessed_data.nii.gz   
+│       ├── confounds.tsv   
+│       ├── bold_space-MNI152NLin2009cAsym_preproc.nii.gz   
+│       ├── bold_space-MNI152NLin2009cAsym_preproc_brainmask.nii.gz   
+│       ├── bold_space-MNI152NLin2009cAsym_preproc_brainmask_dil.nii.gz   
+│       ├── bold_space-MNI152NLin2009cAsym_variant-smoothAROMAnonaggr_preproc.nii.gz   
+│       ├── bold_space-MNI152NLin2009cAsym_variant-smoothAROMAnonaggr_preproc_brainmask.nii.gz   
+│       └── bold_space-MNI152NLin2009cAsym_variant-smoothAROMAnonaggr_preproc_confounds.tsv   
+├── models/  
+│   ├── audio/  
+│   ├── image/  
+│   ├── video/  
+│   ├── fusion/  
+│   └── fmri/   
+│       ├── training.py   
+│       ├── prediction.py   
+│       └── evaluation.py   
+├── scripts/   
+│   ├── feature_extraction/  
+│   ├── model_training/  
+│   ├── model_evaluation/  
+│   ├── inference/  
+│   ├── visualization/  
+│   ├── tools/  
+│   ├── preprocessing.py   
+│   ├── image_reconstruction.py   
+│   ├── registration.py   
+│   ├── fmri.py   
+│   ├── train_fmri.py   
+│   ├── predict_fmri.py  
+│   ├── acoustic_sensing.py   
+│   ├── deep_learning_model.py   
+│   ├── preprocessing.py   
+│   ├── lip_reading.py   
+│   ├── train_model.py   
+│   ├── predict_command.py   
+│   ├── evaluation.py  
+│   ├── EEG_Sig_All.py  
+│   └── evaluate_fmri.py   
+├── environment.yml  
+└── smart_glasses/   
+    ├── eye_tracking.py   
+    ├── facial_movement.py   
+    ├── upper_body_movement.py   
+    └── data_analysis.py  
+<Write the full implementation for the [data_analysis.py] module in code please do not give an example, this must represent exact requirements. Take into account all future and passed written modules to reflect the requirements and specifications set out for this project. Reflecting the exact technology set out by the article down below and the AlterEgo silent speech model from 2019, please make sure this module/file matches the needs and capabilities of this AlterEcho integrated SilentSpeech/AI_Assisted_cognition system using fMRI and EEG Signals with taking into account all relevant modules in the directory above for functions and components.>  
+It is not telepathy: It is the common, off-the-shelf eyeglasses he is wearing, known as EchoSpeech—a silent-speech recognition interface that makes use of acoustic-sensing and artificial intelligence to identify up to 31 unvocalized commands, depending on lip and mouth movements.     
+     
+According to scientists, having been developed by Cornell’s Smart Computer Interfaces for Future Interactions (SciFi) Lab, the low-power and wearable interface needs just a few minutes of user training data before it will identify commands and could be run on a smartphone.     
+     
+Zhang is the lead author of “EchoSpeech: Continuous Silent Speech Recognition on Minimally-obtrusive Eyewear Powered by Acoustic Sensing,” which will be presented at the Association for Computing Machinery Conference on Human Factors in Computing Systems (CHI) April 2023 in Hamburg, Germany. In its current form, EchoSpeech could be utilized to communicate with others through smartphones in places where speech is unsuitable or inconvenient, like a quiet library or a noisy restaurant. Also, the silent speech interface could be paired with a stylus and made use of design software like CAD, all but removing the requirement for a mouse and a keyboard.     
+     
+Fitted with a pair of speakers and microphones smaller than pencil erasers, the EchoSpeech glasses turn out to be a wearable AI-powered sonar system, sending and receiving soundwaves throughout the face and sensing mouth movements. Also, a deep learning algorithm developed by SciFi Lab scientists then examines such echo profiles in real-time, having around 95% accuracy. Also, Zhang is the director of the SciFi Lab.     
+     
+The SciFi Lab has come up with numerous wearable devices that track hand, body, and facial movements with the help of machine learning and wearable miniature video cameras. Now, the laboratory has shifted away from cameras and moved toward acoustic sensing to track body and face movements.     
+     
+EchoSpeech relies on the laboratory’s similar acoustic-sensing device known as EarIO, a wearable earbud that helps track facial movements.     
+     
+Cheng Zhang stated that the majority of the technology in silent-speech recognition had been restricted to a select set of predetermined commands and needed the user to face or wear a camera, which is neither practical nor possible. Also, there are significant privacy concerns, including wearable cameras—for both the user and also with those whom the user interacts with.     
+     
+Newly developed acoustic-sensing technology like EchoSpeech helps eliminate the need for wearable video cameras. Also, because audio data is much smaller compared to the image or video data, it needs less bandwidth to process and could be relayed to a smartphone through Bluetooth in real time, stated François Guimbretière, professor in information science at Cornell Bowers CIS and a co-author. Cheng Zhang stated that battery life improves exponentially, with ten hours with acoustic sensing versus 30 minutes with a camera.     
+     
+Furthermore, the team is examining commercializing the technology behind EchoSpeech, thanks in part to Ignite, Cornell's Research Laboratory to Market gap funding.     
+     
+In upcoming work, scientists from SciFi Lab are exploring smart-glass applications to track eye, facial, and upper body movements.     
+     
+Cheng Zhang stated, “We think glass will be an important personal computing platform to understand human activities in everyday settings.”     
+     
 The co-authors of the study were information science doctoral student Ke Li, Yihong Hao ‘24, Yufan Wang ‘24, and Zhengnan Lai ‘25. This study was partially funded by the National Science Foundation.
