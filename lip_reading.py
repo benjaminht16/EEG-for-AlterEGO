@@ -5,14 +5,14 @@ import tensorflow as tf
 from mtcnn import MTCNN  
 class LipReading:  
     def __init__(self, model_path):  
-        self.detector = MTCNN() 
-        self.graph = tf.Graph()  
+        self.detector = MTCNN()
+        self.graph = tf.Graph()
         with self.graph.as_default():  
-            self.sess = tf.Session()  
-            saver = tf.train.import_meta_graph(model_path + '/model.meta')  
-            saver.restore(self.sess, tf.train.latest_checkpoint(model_path))  
-            self.X = self.graph.get_tensor_by_name("X:0")  
-            self.y_pred = self.graph.get_tensor_by_name("y_pred:0")  
+            self.sess = tf.Session()
+            saver = tf.train.import_meta_graph(f'{model_path}/model.meta')
+            saver.restore(self.sess, tf.train.latest_checkpoint(model_path))
+            self.X = self.graph.get_tensor_by_name("X:0")
+            self.y_pred = self.graph.get_tensor_by_name("y_pred:0")
             self.keep_prob = self.graph.get_tensor_by_name("keep_prob:0")  
     def extract_features(self, video_path):  
         video = cv2.VideoCapture(video_path)  

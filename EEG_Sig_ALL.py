@@ -41,69 +41,68 @@ class EEGWaveExtractor:
                 with open(os.path.join(output_dir, filename), 'w') as f: 
                     f.write(eeg_signal) 
  
-    def preprocess_eeg_signal(self, filepath): 
+    def preprocess_eeg_signal(self, filepath):
         """ 
         Preprocess a single EEG signal file. 
         :param filepath: The path to the EEG signal file. 
         :return: The preprocessed EEG signal. 
         """ 
         # Load the raw EEG signal using MNE library 
-        raw = mne.io.read_raw_edf(filepath) 
+        raw = mne.io.read_raw_edf(filepath)
         raw.load_data() 
- 
+
         # Apply notch and line noise filters if specified 
         if self.notch_filter: 
-            raw.notch_filter(np.arange(50, 251, 50), filter_length='auto', phase='zero') 
+            raw.notch_filter(np.arange(50, 251, 50), filter_length='auto', phase='zero')
         if self.line_noise_filter: 
             raw.filter(49, 51, l_trans_bandwidth=0.5, h_trans_bandwidth=0.5, filter_length='auto') 
- 
+
         # Extract the EEG signal 
         eeg_signal = raw.get_data() 
- 
+
         # Remove the EOG and ECG channels from the EEG signal 
         eeg_signal = eeg_signal[:-2, :] 
- 
+
         # Split the EEG signal into different brain waves 
         delta_wave, theta_wave, alpha_wave, low_beta_1, beta_2, high_beta_3, smr_wave, mu_wave, low_gamma_wave, high_gamma_wave = self.extract_brain_waves( 
             eeg_signal) 
- 
+
         # Preprocess the brain waves (remove artifacts) 
-        delta_wave = self.remove_artifacts(delta_wave, freq_range=(0.5, 4.0), max_amp=200e-6) 
-        theta_wave = self.remove_artifacts(theta_wave, freq_range=(4.0, 8.0), max_amp=100e-6) 
-        alpha_wave = self.remove_artifacts(alpha_wave, freq_range=(8.0, 13.0), max_amp=50e-6) 
-        low_beta_1 = self.remove_artifacts(low_beta_1, freq_range=(12.5, 16.0), max_amp=30e-6) 
-        beta_2 = self.remove_artifacts(beta_2, freq_range=(16.5, 20.0), max_amp=20e-6) 
-        high_beta_3 = self.remove_artifacts(high_beta_3, freq_range=(20.5, 28.0), max_amp=15e-6) 
-        smr_wave = self.remove_artifacts(smr_wave, freq_range=(12.0, 15.0), max_amp=30e-6) 
-        mu_wave = self.remove_artifacts(mu_wave, freq_range=(8.0, 13.0), max_amp=50e-6) 
-        low_gamma_wave = self.remove_artifacts(low_gamma_wave, freq_range=(30.0, 50.0), max_amp=10e-6) 
+        delta_wave = self.remove_artifacts(delta_wave, freq_range=(0.5, 4.0), max_amp=200e-6)
+        theta_wave = self.remove_artifacts(theta_wave, freq_range=(4.0, 8.0), max_amp=100e-6)
+        alpha_wave = self.remove_artifacts(alpha_wave, freq_range=(8.0, 13.0), max_amp=50e-6)
+        low_beta_1 = self.remove_artifacts(low_beta_1, freq_range=(12.5, 16.0), max_amp=30e-6)
+        beta_2 = self.remove_artifacts(beta_2, freq_range=(16.5, 20.0), max_amp=20e-6)
+        high_beta_3 = self.remove_artifacts(high_beta_3, freq_range=(20.5, 28.0), max_amp=15e-6)
+        smr_wave = self.remove_artifacts(smr_wave, freq_range=(12.0, 15.0), max_amp=30e-6)
+        mu_wave = self.remove_artifacts(mu_wave, freq_range=(8.0, 13.0), max_amp=50e-6)
+        low_gamma_wave = self.remove_artifacts(low_gamma_wave, freq_range=(30.0, 50.0), max_amp=10e-6)
         high_gamma_wave = self.remove_artifacts(high_gamma_wave, freq_range=(50.0, 100.0), max_amp=5e-6) 
- 
+
         # Calculate the mean of each brain wave 
-        delta_wave_mean = np.mean(delta_wave) 
-        theta_wave_mean = np.mean(theta_wave) 
-        alpha_wave_mean = np.mean(alpha_wave) 
-        low_beta_1_mean = np.mean(low_beta_1) 
-        beta_2_mean = np.mean(beta_2) 
-        high_beta_3_mean = np.mean(high_beta_3) 
-        smr_wave_mean = np.mean(smr_wave) 
-        mu_wave_mean = np.mean(mu_wave) 
-        low_gamma_wave_mean = np.mean(low_gamma_wave) 
+        delta_wave_mean = np.mean(delta_wave)
+        theta_wave_mean = np.mean(theta_wave)
+        alpha_wave_mean = np.mean(alpha_wave)
+        low_beta_1_mean = np.mean(low_beta_1)
+        beta_2_mean = np.mean(beta_2)
+        high_beta_3_mean = np.mean(high_beta_3)
+        smr_wave_mean = np.mean(smr_wave)
+        mu_wave_mean = np.mean(mu_wave)
+        low_gamma_wave_mean = np.mean(low_gamma_wave)
         high_gamma_wave_mean = np.mean(high_gamma_wave) 
- 
-        # Create a dictionary for the means of the brain waves 
-        preprocessed_eeg_signal = {"Delta Wave": delta_wave_mean, 
-                                   "Theta Wave": theta_wave_mean, 
-                                   "Alpha Wave": alpha_wave_mean, 
-                                   "Low Beta 1 Wave": low_beta_1_mean, 
-                                   "Beta 2 Wave": beta_2_mean, 
-                                   "High Beta 3 Wave": high_beta_3_mean, 
-                                   "SMR Wave": smr_wave_mean, 
-                                   "Mu Wave": mu_wave_mean, 
-                                   "Low Gamma Wave": low_gamma_wave_mean, 
-                                   "High Gamma Wave": high_gamma_wave_mean} 
- 
-        return preprocessed_eeg_signal 
+
+        return {
+            "Delta Wave": delta_wave_mean,
+            "Theta Wave": theta_wave_mean,
+            "Alpha Wave": alpha_wave_mean,
+            "Low Beta 1 Wave": low_beta_1_mean,
+            "Beta 2 Wave": beta_2_mean,
+            "High Beta 3 Wave": high_beta_3_mean,
+            "SMR Wave": smr_wave_mean,
+            "Mu Wave": mu_wave_mean,
+            "Low Gamma Wave": low_gamma_wave_mean,
+            "High Gamma Wave": high_gamma_wave_mean,
+        } 
  
     def extract_brain_waves(self, eeg_signal): 
         """ 
@@ -140,8 +139,8 @@ class EEGWaveExtractor:
  
         return delta_wave, theta_wave, alpha_wave, low_beta_1, beta_2, high_beta_3, smr_wave, mu_wave, low_gamma_wave, high_gamma_wave 
  
-    @staticmethod 
-    def extract_wave(psd, freqs, freq_range): 
+    @staticmethod
+    def extract_wave(psd, freqs, freq_range):
         """ 
         Extract a specific brain wave from the power spectral density of the EEG signal within the given frequency range. 
         :param psd: The power spectral density of the EEG signal. 
@@ -149,12 +148,10 @@ class EEGWaveExtractor:
         :param freq_range: The frequency range to extract the brain wave. 
         :return: The extracted brain wave. 
         """ 
-        start_idx, end_idx = np.searchsorted(freqs, freq_range) 
-        wave = np.mean(psd[start_idx:end_idx], axis=0) 
+        start_idx, end_idx = np.searchsorted(freqs, freq_range)
+        return np.mean(psd[start_idx:end_idx], axis=0) 
  
-        return wave 
- 
-    def remove_artifacts(self, brain_wave, freq_range, max_amp): 
+    def remove_artifacts(self, brain_wave, freq_range, max_amp):
         """ 
         Remove artifacts from the brain wave signal. 
         :param brain_wave: The brain wave signal to remove artifacts from. 
@@ -164,79 +161,82 @@ class EEGWaveExtractor:
         """ 
         # Filter the brain wave signal using the frequency range 
         filtered_wave = self.bandpass_filter(brain_wave, freq_range) 
+
+        return np.where(np.abs(filtered_wave) > max_amp, 0, filtered_wave) 
  
-        # Remove the artifacts from the brain wave signal based on the maximum amplitude 
-        artifact_removed_wave = np.where(np.abs(filtered_wave) > max_amp, 0, filtered_wave) 
- 
-        return artifact_removed_wave 
- 
-    def bandpass_filter(self, signal, freq_range): 
+    def bandpass_filter(self, signal, freq_range):
         """ 
         Apply a bandpass filter to the signal using the given frequency range. 
         :param signal: The signal to apply the bandpass filter to. 
         :param freq_range: The frequency range to apply the bandpass filter. 
         :return: The filtered signal. 
         """ 
-        nyquist_freq = self.sfreq / 2 
-        low_freq, high_freq = freq_range 
-        low_freq /= nyquist_freq 
-        high_freq /= nyquist_freq 
-        b, a = signal.butter(4, [low_freq, high_freq], btype='band') 
-        filtered_signal = signal.filtfilt(b, a, signal) 
- 
-        return filtered_signal
-    def normalize_wave(self, brain_wave):  
+        nyquist_freq = self.sfreq / 2
+        low_freq, high_freq = freq_range
+        low_freq /= nyquist_freq
+        high_freq /= nyquist_freq
+        b, a = signal.butter(4, [low_freq, high_freq], btype='band')
+        return signal.filtfilt(b, a, signal)
+    def normalize_wave(self, brain_wave):
         """  
         Normalize the brain wave signal to have zero mean and unit variance.  
         :param brain_wave: The brain wave signal to normalize.  
         :return: The normalized brain wave signal.  
         """  
-        norm_wave = (brain_wave - np.mean(brain_wave)) / np.std(brain_wave)  
+        return (brain_wave - np.mean(brain_wave)) / np.std(brain_wave)  
   
-        return norm_wave  
-  
-    def extract_features(self, eeg_signal):  
+    def extract_features(self, eeg_signal):
         """  
         Extract features from the raw EEG signal.  
         :param eeg_signal: The raw EEG signal.  
         :return: The extracted features.  
         """  
         # Apply pre-processing steps to the EEG signal  
-        notch_filtered_signal = self.notch_filter(eeg_signal)  
-        standardized_signal = self.standardize_signal(notch_filtered_signal)  
+        notch_filtered_signal = self.notch_filter(eeg_signal)
+        standardized_signal = self.standardize_signal(notch_filtered_signal)
         epoch = self.split_into_epochs(standardized_signal)  
-  
+
         # Compute the power spectral density of the EEG signal  
         psd, freqs = self.compute_psd(epoch)  
-  
+
         # Extract different brain waves from the power spectral density  
         delta_wave, theta_wave, alpha_wave, low_beta_1, beta_2, high_beta_3, smr_wave, mu_wave, low_gamma_wave, high_gamma_wave = self.extract_brain_waves(psd, freqs)  
-  
+
         # Remove artifacts from the extracted brain waves  
-        delta_wave = self.remove_artifacts(delta_wave, delta_band, max_amp=100)  
-        theta_wave = self.remove_artifacts(theta_wave, theta_band, max_amp=75)  
-        alpha_wave = self.remove_artifacts(alpha_wave, alpha_band, max_amp=50)  
-        low_beta_1 = self.remove_artifacts(low_beta_1, low_beta_1_band, max_amp=30)  
-        beta_2 = self.remove_artifacts(beta_2, beta_2_band, max_amp=20)  
-        high_beta_3 = self.remove_artifacts(high_beta_3, high_beta_3_band, max_amp=10)  
-        smr_wave = self.remove_artifacts(smr_wave, smr_band, max_amp=5)  
-        mu_wave = self.remove_artifacts(mu_wave, mu_band, max_amp=3)  
-        low_gamma_wave = self.remove_artifacts(low_gamma_wave, low_gamma_band, max_amp=2)  
+        delta_wave = self.remove_artifacts(delta_wave, delta_band, max_amp=100)
+        theta_wave = self.remove_artifacts(theta_wave, theta_band, max_amp=75)
+        alpha_wave = self.remove_artifacts(alpha_wave, alpha_band, max_amp=50)
+        low_beta_1 = self.remove_artifacts(low_beta_1, low_beta_1_band, max_amp=30)
+        beta_2 = self.remove_artifacts(beta_2, beta_2_band, max_amp=20)
+        high_beta_3 = self.remove_artifacts(high_beta_3, high_beta_3_band, max_amp=10)
+        smr_wave = self.remove_artifacts(smr_wave, smr_band, max_amp=5)
+        mu_wave = self.remove_artifacts(mu_wave, mu_band, max_amp=3)
+        low_gamma_wave = self.remove_artifacts(low_gamma_wave, low_gamma_band, max_amp=2)
         high_gamma_wave = self.remove_artifacts(high_gamma_wave, high_gamma_band, max_amp=1)  
-  
+
         # Normalize the extracted brain waves  
-        delta_wave_norm = self.normalize_wave(delta_wave)  
-        theta_wave_norm = self.normalize_wave(theta_wave)  
-        alpha_wave_norm = self.normalize_wave(alpha_wave)  
-        low_beta_1_norm = self.normalize_wave(low_beta_1)  
-        beta_2_norm = self.normalize_wave(beta_2)  
-        high_beta_3_norm = self.normalize_wave(high_beta_3)  
-        smr_wave_norm = self.normalize_wave(smr_wave)  
-        mu_wave_norm = self.normalize_wave(mu_wave)  
-        low_gamma_wave_norm = self.normalize_wave(low_gamma_wave)  
+        delta_wave_norm = self.normalize_wave(delta_wave)
+        theta_wave_norm = self.normalize_wave(theta_wave)
+        alpha_wave_norm = self.normalize_wave(alpha_wave)
+        low_beta_1_norm = self.normalize_wave(low_beta_1)
+        beta_2_norm = self.normalize_wave(beta_2)
+        high_beta_3_norm = self.normalize_wave(high_beta_3)
+        smr_wave_norm = self.normalize_wave(smr_wave)
+        mu_wave_norm = self.normalize_wave(mu_wave)
+        low_gamma_wave_norm = self.normalize_wave(low_gamma_wave)
         high_gamma_wave_norm = self.normalize_wave(high_gamma_wave)  
-  
-        # Compute features from the normalized brain waves  
-        feature_vector = np.concatenate((delta_wave_norm, theta_wave_norm, alpha_wave_norm, low_beta_1_norm, beta_2_norm, high_beta_3_norm, smr_wave_norm, mu_wave_norm, low_gamma_wave_norm, high_gamma_wave_norm))  
-  
-        return feature_vector
+
+        return np.concatenate(
+            (
+                delta_wave_norm,
+                theta_wave_norm,
+                alpha_wave_norm,
+                low_beta_1_norm,
+                beta_2_norm,
+                high_beta_3_norm,
+                smr_wave_norm,
+                mu_wave_norm,
+                low_gamma_wave_norm,
+                high_gamma_wave_norm,
+            )
+        )
