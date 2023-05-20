@@ -76,16 +76,14 @@ class FacialMovement:
         self.model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, callbacks=[tensorboard_callback]) 
  
     def evaluate_model(self, X_test, y_test): 
-        scores = self.model.evaluate(X_test, y_test, verbose=1) 
-        return scores 
+        return self.model.evaluate(X_test, y_test, verbose=1) 
  
     def predict(self, audio_data, sample_rate): 
-        features = np.array([self.extract_features(x, sample_rate) for x in audio_data]) 
-        normalized_audio = np.array([librosa.util.normalize(x) for x in features]) 
-        normalized_audio = normalized_audio.reshape(normalized_audio.shape[0], normalized_audio.shape[1], 1) 
-        predictions = self.model.predict(normalized_audio) 
-        predicted_labels = self.label_encoder.inverse_transform(np.argmax(predictions, axis=1)) 
-        return predicted_labels 
+        features = np.array([self.extract_features(x, sample_rate) for x in audio_data])
+        normalized_audio = np.array([librosa.util.normalize(x) for x in features])
+        normalized_audio = normalized_audio.reshape(normalized_audio.shape[0], normalized_audio.shape[1], 1)
+        predictions = self.model.predict(normalized_audio)
+        return self.label_encoder.inverse_transform(np.argmax(predictions, axis=1)) 
  
     def extract_features(self, audio, sample_rate, n_mfcc=20): 
         mfccs = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=n_mfcc) 

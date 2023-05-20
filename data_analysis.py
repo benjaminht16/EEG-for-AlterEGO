@@ -142,9 +142,7 @@ from tools import preprocess_data
     model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy']) 
     return model 
  def load_eeg_data(eeg_data_path): 
-    # Load EEG data for fmri classification 
-    eeg_data = None # Replace with actual eeg data 
-    return eeg_data 
+  return None 
  if __name__ == "__main__": 
     data_path = "data/" 
     model_type = "acoustic_sensing" 

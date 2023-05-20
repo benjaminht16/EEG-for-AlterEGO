@@ -92,7 +92,7 @@ def train_fmri_model(fmri_data, labels, cv=5):
     return model 
  
  
-def predict_fmri_labels(fmri_data, model): 
+def predict_fmri_labels(fmri_data, model):
     """ 
     Predict labels using a trained fMRI predictive model. 
  
@@ -103,6 +103,4 @@ def predict_fmri_labels(fmri_data, model):
     Returns: 
     - labels_predicted (numpy array): array of predicted labels with shape (n_samples,) 
     """ 
-    labels_predicted = model.predict(fmri_data) 
- 
-    return labels_predicted
+    return model.predict(fmri_data)

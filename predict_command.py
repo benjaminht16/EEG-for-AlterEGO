@@ -28,22 +28,18 @@ from predict_fmri import predict_fmri_command
     parser.add_argument('--use_augmentation', type=bool, default=True, help='Whether to use data augmentation or not.')
     return parser.parse_args(argv)
  def create_cnn_model(input_shape):
-    # Transfer Learning with VGG16
-    base_model = VGG16(weights='imagenet', include_top=False, input_shape=input_shape)
-     # Freezing base layers
-    for layer in base_model.layers:
-        layer.trainable = False
-     # Modifying top layers
-    x = base_model.output
-    x = Conv2D(256, (3,3), activation='relu')(x)
-    x = MaxPooling2D(pool_size=(2,2))(x)
-    x = Flatten()(x)
-    x = Dense(256, activation='relu')(x)
-    x = Dropout(0.5)(x)
-    predictions = Dense(10, activation='softmax')(x)
-     # Creating model
-    model = Model(inputs=base_model.input, outputs=predictions)
-    return model
+  # Transfer Learning with VGG16
+  base_model = VGG16(weights='imagenet', include_top=False, input_shape=input_shape)
+  for layer in base_model.layers:
+      layer.trainable = False
+  x = base_model.output
+  x = Conv2D(256, (3,3), activation='relu')(x)
+  x = MaxPooling2D(pool_size=(2,2))(x)
+  x = Flatten()(x)
+  x = Dense(256, activation='relu')(x)
+  x = Dropout(0.5)(x)
+  predictions = Dense(10, activation='softmax')(x)
+  return Model(inputs=base_model.input, outputs=predictions)
  def main(args):
     # Setting up directories and creating output directory
     data_dir = args.data_dir

@@ -31,8 +31,8 @@ from sklearn.metrics import accuracy_score
     mask_img = image.load_img(mask_file)  
     fmri_data = masking.apply_mask(fmri_data, mask_img)  
     return fmri_data  
- def train_fmri_model(fmri_data: np.ndarray, labels: np.ndarray) -> LogisticRegression:  
-    """  
+ def train_fmri_model(fmri_data: np.ndarray, labels: np.ndarray) -> LogisticRegression:
+  """  
     Trains a machine learning model on fMRI data.  
     Args:  
         fmri_data (numpy.ndarray): Preprocessed fMRI data.  
@@ -40,13 +40,11 @@ from sklearn.metrics import accuracy_score
     Returns:  
         model (sklearn.linear_model.LogisticRegression): Trained machine learning model.  
     """  
-    # Split data into training and testing sets  
-    X_train, X_test, y_train, y_test = train_test_split(fmri_data, labels, test_size=0.2, random_state=42)  
-    # Train model  
-    model = LogisticRegression().fit(X_train, y_train)  
-    return model  
- def evaluate_fmri_model(model: LogisticRegression, fmri_data: np.ndarray, labels: np.ndarray) -> float:  
-    """  
+  # Split data into training and testing sets  
+  X_train, X_test, y_train, y_test = train_test_split(fmri_data, labels, test_size=0.2, random_state=42)
+  return LogisticRegression().fit(X_train, y_train)  
+ def evaluate_fmri_model(model: LogisticRegression, fmri_data: np.ndarray, labels: np.ndarray) -> float:
+  """  
     Evaluates the performance of a machine learning model on fMRI data.  
     Args:  
         model (sklearn.linear_model.LogisticRegression): Trained machine learning model.  
@@ -55,11 +53,9 @@ from sklearn.metrics import accuracy_score
     Returns:  
         accuracy (float): Classification accuracy of the model.  
     """  
-    # Predict labels  
-    y_pred = model.predict(fmri_data)  
-    # Calculate accuracy  
-    accuracy = accuracy_score(labels, y_pred)  
-    return accuracy  
+  # Predict labels  
+  y_pred = model.predict(fmri_data)
+  return accuracy_score(labels, y_pred)  
  def cross_validate_fmri_model(fmri_data: np.ndarray, labels: np.ndarray, cv: int = 5) -> float:  
     """  
     Performs cross-validation on a given machine learning model and fMRI data.  
